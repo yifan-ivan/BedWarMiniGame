@@ -37,6 +37,7 @@ public class Player {
         if (this.shield) {
             this.shield = false;
             System.out.println(Utils.colorString("Player #" + this.id + " lost his shield!", "red"));
+            return;
         }
         if (health - damageCount <= 0) {
             this.die();

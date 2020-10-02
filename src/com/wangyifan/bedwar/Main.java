@@ -23,11 +23,11 @@ public class Main {
     }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-//        playerNum = sc.nextInt();
+        System.out.println("Please enter the amount of players: ");
+        playerNum = sc.nextInt();
         for (int i = 0; i < playerNum; i++) {
             players[i] = new Player(i+1);
         }
-//        System.out.println("=============Game Started!=============");
         while (playerNum > 0) {
 //            System.out.println("Current status: ");
             printStatus();
@@ -55,6 +55,9 @@ public class Main {
                 player.location.equals("Electron Store")) {
                     System.out.println("7. Buy");
                 }
+            }
+            if (player.location.contains("Home") && (! player.location.contains(String.valueOf(player.id)))) {
+                System.out.println("8. Destroy " + player.location + "'s bed");
             }
             int mode = sc.nextInt();
 
@@ -147,10 +150,10 @@ public class Main {
                             players[i].getDamage(1);
                             if (players[i].bedProtected) {
                                 players[i].bedProtected = false;
-                                System.out.println("Player #" + players[i].id + " lost his protection of his bed!");
+                                System.out.println(Utils.colorString("Player #" + players[i].id + " lost his protection of his bed!", "red"));
                             } else {
                                 players[i].bed = false;
-                                System.out.println("Player #" + players[i].id + " lost his bed!");
+                                System.out.println(Utils.colorString("Player #" + players[i].id + " lost his bed!", "red"));
                             }
                             player.teleport("Home#" + player.id);
                             players[i].sleep = false;
@@ -206,6 +209,24 @@ public class Main {
                         default:
                             System.out.println(Utils.colorString("Your current location don't support buying!", "red"));
                             break;
+                    }
+                    break;
+
+                case 8:
+                    for (int i = 0; i < playerNum; i++) {
+                        if (i+1 == player.id) {
+                            continue;
+                        }
+                        if (player.location.contains(String.valueOf(i+1))) {
+                            System.out.println(Utils.colorString("You destroyed " + player.location + "'s bed", "green"));
+                            if (players[i].bedProtected) {
+                                players[i].bedProtected = false;
+                                System.out.println(Utils.colorString("Player #" + players[i].id + " lost his protection of his bed!", "red"));
+                            } else {
+                                players[i].bed = false;
+                                System.out.println(Utils.colorString("Player #" + players[i].id + " lost his bed!", "red"));
+                            }
+                        }
                     }
                     break;
 
