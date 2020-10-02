@@ -4,6 +4,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+    // set to -1 to unable
+    static int seed = -1;
     static Player[] players = new Player[100001];
     static int playerNum = 2;
     public static void printStatus() {
@@ -22,6 +24,12 @@ public class Main {
         }
     }
     public static void main(String[] args) {
+        Random random;
+        if (seed != -1) {
+            random = new Random(seed);
+        } else {
+            random = new Random();
+        }
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter the amount of players: ");
         playerNum = sc.nextInt();
@@ -31,7 +39,6 @@ public class Main {
         while (playerNum > 0) {
 //            System.out.println("Current status: ");
             printStatus();
-            Random random = new Random();
             int randomPlayerIndex = random.nextInt(playerNum);
             Player player = players[randomPlayerIndex];
             System.out.println(Utils.colorString("This round: Player #" + player.id, "blue"));
