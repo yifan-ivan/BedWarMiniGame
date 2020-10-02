@@ -36,7 +36,7 @@ public class Main {
         for (int i = 0; i < playerNum; i++) {
             players[i] = new Player(i+1);
         }
-        while (playerNum > 0) {
+        while (playerNum > 1) {
 //            System.out.println("Current status: ");
             printStatus();
             int randomPlayerIndex = random.nextInt(playerNum);
@@ -64,7 +64,19 @@ public class Main {
                 }
             }
             if (player.location.contains("Home") && (! player.location.contains(String.valueOf(player.id)))) {
-                System.out.println("8. Destroy " + player.location + "'s bed");
+                for (int i = 0; i < playerNum; i++) {
+                    if (i+1 == player.id) {
+                        continue;
+                    }
+                    if (player.location.contains(String.valueOf(i+1))) {
+                        if (! players[i].bed) {
+                            break;
+                        }
+                        else {
+                            System.out.println("8. Destroy " + player.location + "'s bed");
+                        }
+                    }
+                }
             }
             int mode = sc.nextInt();
 
@@ -163,8 +175,10 @@ public class Main {
                                 System.out.println(Utils.colorString("Player #" + players[i].id + " lost his bed!", "red"));
                             }
                             player.teleport("Home#" + player.id);
-                            players[i].sleep = false;
-                            player.cannon = false;
+                            if (! players[i].bed) {
+                                players[i].sleep = false;
+                            }
+                            player.ItalianCannon = false;
                             break;
                         }
                     }
