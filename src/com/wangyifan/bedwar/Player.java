@@ -10,7 +10,7 @@ public class Player {
     Boolean cannon = false;
     Boolean ItalianCannon = false;
     Boolean bedProtected = false;
-    String location = "Home#" + this.id;
+    String location;
     int health = 1;
 
     public Player(int id) {
@@ -81,6 +81,7 @@ public class Player {
 
     public void eliminate() {
         this.eliminated = true;
+        Main.playerNum --;
         System.out.println(Utils.colorString("Player #" + this.id + " has been eliminated!", "red"));
 
     }

@@ -1,10 +1,7 @@
 package com.wangyifan.bedwar;
 
-import jdk.jshell.execution.Util;
-
 import java.util.Random;
 import java.util.Scanner;
-//import com.wangyifan.bedwar.Utils;
 
 public class Main {
     static Player[] players = new Player[100001];
@@ -31,7 +28,7 @@ public class Main {
             players[i] = new Player(i+1);
         }
 //        System.out.println("=============Game Started!=============");
-        while (true) {
+        while (playerNum > 0) {
 //            System.out.println("Current status: ");
             printStatus();
             Random random = new Random();
@@ -165,45 +162,50 @@ public class Main {
 
                 case 7:
                     // Buy
-                    if (player.location.equals("Scientific Base")) {
-                        System.out.println("Please enter the item you want to buy:");
-                        System.out.println("1. Shield");
-                        input = sc.nextInt();
-                        switch (input) {
-                            case 1:
-                                player.getItem("shield");
-                                break;
-                            default:
-                                throw new IllegalStateException("Unexpected value: " + input);
-                        }
-                    } else if (player.location.equals("War Base")) {
-                        System.out.println("Please enter the item you want to buy:");
-                        System.out.println("1. Cannon");
-                        System.out.println("2. Italian Cannon");
-                        input = sc.nextInt();
-                        switch (input) {
-                            case 1:
-                                player.getItem("cannon");
-                                break;
-                            case 2:
-                                player.getItem("ItalianCannon");
-                                break;
-                            default:
-                                throw new IllegalStateException("Unexpected value: " + input);
-                        }
-                    } else if (player.location.equals("Electron Store")) {
-                        System.out.println("Please enter the item you want to buy:");
-                        System.out.println("1. lock");
-                        input = sc.nextInt();
-                        switch (input) {
-                            case 1:
-                                player.getItem("lock");
-                                break;
-                            default:
-                                throw new IllegalStateException("Unexpected value: " + input);
-                        }
-                    } else {
-                        Utils.colorString("Your current location don't support buying!", "red");
+                    switch (player.location) {
+                        case "Scientific Base":
+                            System.out.println("Please enter the item you want to buy:");
+                            System.out.println("1. Shield");
+                            input = sc.nextInt();
+                            switch (input) {
+                                case 1:
+                                    player.getItem("shield");
+                                    break;
+                                default:
+                                    throw new IllegalStateException("Unexpected value: " + input);
+                            }
+                            break;
+                        case "War Base":
+                            System.out.println("Please enter the item you want to buy:");
+                            System.out.println("1. Cannon");
+                            System.out.println("2. Italian Cannon");
+                            input = sc.nextInt();
+                            switch (input) {
+                                case 1:
+                                    player.getItem("cannon");
+                                    break;
+                                case 2:
+                                    player.getItem("ItalianCannon");
+                                    break;
+                                default:
+                                    throw new IllegalStateException("Unexpected value: " + input);
+                            }
+                            break;
+                        case "Electron Store":
+                            System.out.println("Please enter the item you want to buy:");
+                            System.out.println("1. lock");
+                            input = sc.nextInt();
+                            switch (input) {
+                                case 1:
+                                    player.getItem("lock");
+                                    break;
+                                default:
+                                    throw new IllegalStateException("Unexpected value: " + input);
+                            }
+                            break;
+                        default:
+                            System.out.println(Utils.colorString("Your current location don't support buying!", "red"));
+                            break;
                     }
                     break;
 
@@ -213,5 +215,7 @@ public class Main {
             }
 
         }
+
+        System.out.println(Utils.colorString("Game Over!", "green"));
     }
 }
